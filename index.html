@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>영업관리시스템 요구사항 파악 미팅</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; }
+
+    .header { margin-bottom: 1.5rem; }
+    .header h1 { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 6px; }
+    .header p { font-size: 13px; color: #666; }
+
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
+    .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+    .dot-free  { background: #fff; border: 1px solid #ccc; }
+    .dot-mine  { background: #185FA5; }
+    .dot-taken { background: #FCEBEB; border: 1px solid #F09595; }
+    .dot-block { background: #eee; border: 1px solid #ddd; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    table { border-collapse: collapse; width: 100%; min-width: 680px; }
+
+    thead th {
+      font-size: 12px; font-weight: 600; color: #555;
+      padding: 10px 6px; text-align: center;
+      border-bottom: 2px solid #ddd;
+      background: #f9f9f7;
+      position: sticky; top: 0; z-index: 2;
+    }
+    thead th:first-child { text-align: left; padding-left: 14px; width: 62px; }
+
+    tbody td {
+      padding: 2px 3px;
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+      text-align: center;
+    }
+    tbody td:last-child { border-right: none; }
+
+    td.time-cell {
+      font-size: 11px; color: #999;
+      padding: 2px 10px;
+      white-space: nowrap;
+      background: #f9f9f7;
+      text-align: left;
+      border-right: 1px solid #ddd;
+    }
+    td.time-cell.hour { font-weight: 600; color: #666; }
+
+    tr.lunch-above td { border-bottom: 2.5px solid #378ADD; }
+    tr.lunch-below td { border-top: 2.5px solid #378ADD; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .slot-btn {
+      width: 100%; min-height: 28px;
+      border-radius: 4px; border: none;
+      cursor: pointer; font-size: 10px; font-weight: 600;
+      transition: all 0.12s; padding: 2px 3px; line-height: 1.3;
+    }
+    .slot-free  { background: #fff; border: 1px solid #ddd !important; color: #aaa; }
+    .slot-free:hover { background: #E6F1FB; border-color: #378ADD !important; color: #185FA5; }
+    .slot-mine  { background: #185FA5; color: #fff; }
+    .slot-mine:hover { background: #134f8a; }
+    .slot-taken { background: #FCEBEB; border: 1px solid #F09595 !important; color: #A32D2D; cursor: not-allowed; }
+    .slot-blocked { background: #f0f0ee; border: 1px solid #e0e0de !important; color: #bbb; cursor: not-allowed; font-size: 9px; font-style: italic; }
+
+    .stats {
+      display: flex; gap: 12px; margin-top: 1.2rem; flex-wrap: wrap;
+    }
+    .stat-card {
+      background: #fff; border: 1px solid #e8e8e6;
+      border-radius: 8px; padding: 12px 18px; flex: 1; min-width: 100px;
+    }
+    .stat-label { font-size: 11px; color: #888; margin-bottom: 3px; }
+    .stat-val { font-size: 22px; font-weight: 600; color: #111; }
+
+    .status-bar {
+      margin-top: 8px; font-size: 11px; color: #999; min-height: 18px;
+    }
+    .note { font-size: 11px; color: #999; margin-top: 6px; }
+
+    /* Modal */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 14px;
+      border: 1px solid #ddd; padding: 1.6rem;
+      width: 340px; max-width: 92vw;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    }
+    .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 5px; color: #111; }
+    .modal .slot-info {
+      font-size: 13px; color: #555;
+      background: #f5f5f3; border-radius: 8px;
+      padding: 8px 12px; margin-bottom: 16px;
+    }
+    .modal select, .modal input {
+      width: 100%; padding: 9px 11px;
+      border: 1px solid #ccc; border-radius: 8px;
+      font-size: 14px; color: #111;
+      margin-bottom: 10px; background: #fff;
+      appearance: auto;
+    }
+    .modal select:focus, .modal input:focus {
+      outline: none; border-color: #378ADD;
+      box-shadow: 0 0 0 2px rgba(55,138,221,0.15);
+    }
+    .modal-btns { display: flex; gap: 8px; margin-top: 4px; }
+    .btn-cancel {
+      flex: 1; padding: 9px; border: 1px solid #ccc;
+      border-radius: 8px; background: #fff; color: #555;
+      cursor: pointer; font-size: 13px;
+    }
+    .btn-cancel:hover { background: #f5f5f3; }
+    .btn-confirm {
+      flex: 2; padding: 9px; border: none;
+      border-radius: 8px; background: #185FA5; color: #fff;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+    }
+    .btn-confirm:hover { background: #134f8a; }
+
+    /* Firebase config notice */
+    .config-notice {
+      background: #FFF8E6; border: 1px solid #F5C97A;
+      border-radius: 10px; padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem; font-size: 13px; color: #7a5c00;
+    }
+    .config-notice strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .config-notice code {
+      display: block; margin-top: 8px; padding: 8px 10px;
+      background: #fff; border-radius: 6px; border: 1px solid #f0d58a;
+      font-family: 'Courier New', monospace; font-size: 12px; color: #333;
+      line-height: 1.7; white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  
+  <div class="header">
+    <h1>영업관리시스템 요구사항 파악 미팅</h1>
+    <p>4월 9일(목) – 4월 15일(수) &nbsp;·&nbsp; 오전 8시 – 오후 5시 &nbsp;·&nbsp; 30분 단위 &nbsp;·&nbsp; 점심(11:30–13:00) 제외</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot dot-free"></div>예약 가능</div>
+    <div class="legend-item"><div class="legend-dot dot-mine"></div>내 팀 예약</div>
+    <div class="legend-item"><div class="legend-dot dot-taken"></div>타팀 예약</div>
+    <div class="legend-item"><div class="legend-dot dot-block"></div>예약 불가</div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="scheduleTable"><thead></thead><tbody></tbody></table>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card"><div class="stat-label">예약 가능 슬랏</div><div class="stat-val" id="statTotal">-</div></div>
+    <div class="stat-card"><div class="stat-label">남은 슬랏</div><div class="stat-val" id="statFree">-</div></div>
+    <div class="stat-card"><div class="stat-label">예약 완료</div><div class="stat-val" id="statBooked">-</div></div>
+  </div>
+
+  <div class="status-bar" id="statusBar">Firebase 연결 중...</div>
+  <p class="note">* 내 팀 예약(파란색)을 다시 클릭하면 취소됩니다. 예약 정보는 실시간으로 반영됩니다.</p>
+</div>
+
+<!-- 예약 모달 -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>슬랏 예약</h3>
+    <div class="slot-info" id="modalDesc"></div>
+    <select id="teamSelect">
+      <option value="">팀 선택...</option>
+      <option>마솔1팀</option>
+      <option>마솔2팀</option>
+      <option>마솔3팀</option>
+      <option>마솔4팀</option>
+      <option>디지털사업팀</option>
+      <option>솔루션기획2팀</option>
+      <option>콘텐트사업팀</option>
+      <option>이노베이션랩</option>
+      <option>콘텐트개발팀</option>
+      <option>매체사업팀</option>
+      <option>운영지원팀</option>
+    </select>
+    <input type="text" id="nameInput" placeholder="이름 (선택사항)" maxlength="20" />
+    <div class="modal-btns">
+      <button class="btn-cancel" id="btnCancel">취소</button>
+      <button class="btn-confirm" id="btnConfirm">예약 확정</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyALLrii1B889n_G2XK6OQwMtqHAd5YT_1E",
+    authDomain: "test-meeting-volume1.firebaseapp.com",
+    databaseURL: "https://test-meeting-volume1-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "test-meeting-volume1",
+  };
+
+  // ─── 일정 데이터 ───────────────────────────────────────────
+  const DAYS = [
+    { label: '4/9 (목)',  key: 'thu' },
+    { label: '4/10 (금)', key: 'fri' },
+    { label: '4/13 (월)', key: 'mon' },
+    { label: '4/14 (화)', key: 'tue' },
+    { label: '4/15 (수)', key: 'wed' },
+  ];
+
+  const LUNCH = new Set(['11:30', '12:00', '12:30']);
+
+  const BLOCKED = {
+    thu: new Set(['09:30']),
+    mon: new Set(['10:00', '10:30', '11:00', '14:00']),
+    tue: new Set(['10:30', '11:00', '13:00', '13:30']),
+  };
+
+  const ALL_SLOTS = [];
+  for (let h = 8; h < 17; h++) {
+    ALL_SLOTS.push(`${String(h).padStart(2,'0')}:00`);
+    ALL_SLOTS.push(`${String(h).padStart(2,'0')}:30`);
+  }
+  const SLOTS = ALL_SLOTS.filter(t => !LUNCH.has(t));
+
+  // ─── 상태 ─────────────────────────────────────────────────
+  let bookings = {};
+  let pendingKey = null;
+  // 이 세션에서 내가 예약한 슬랏 키 집합 (새로고침하면 초기화 — 타인 예약 구분용)
+  const MY_BOOKINGS = new Set(JSON.parse(sessionStorage.getItem('myBookings') || '[]'));
+
+  function saveMine() {
+    sessionStorage.setItem('myBookings', JSON.stringify([...MY_BOOKINGS]));
+  }
+
+  // ─── Firebase 초기화 ────────────────────────────────────────
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db  = getDatabase(app);
+  const dbRef = ref(db, 'meeting_bookings');
+
+  setStatus('실시간 연결 중...');
+  onValue(dbRef, (snapshot) => {
+    bookings = snapshot.val() || {};
+    renderTable();
+    setStatus('✓ 실시간 연결됨');
+  }, (err) => {
+    setStatus('⚠️ 연결 실패: ' + err.message);
+  });
+
+  // ─── 렌더링 ──────────────────────────────────────────────────
+  function renderTable() {
+    const table = document.getElementById('scheduleTable');
+    // thead
+    let thead = '<tr><th>시간</th>';
+    DAYS.forEach(d => { thead += `<th>${d.label}</th>`; });
+    thead += '</tr>';
+    table.querySelector('thead').innerHTML = thead;
+
+    // tbody
+    let tbody = '';
+    SLOTS.forEach(time => {
+      const isHour      = time.endsWith(':00');
+      const lunchAbove  = time === '11:00';
+      const lunchBelow  = time === '13:00';
+      const rowClass    = lunchAbove ? 'lunch-above' : lunchBelow ? 'lunch-below' : '';
+
+      tbody += `<tr class="${rowClass}">`;
+      tbody += `<td class="time-cell${isHour ? ' hour' : ''}">${time}</td>`;
+
+      DAYS.forEach(d => {
+        const isBlocked = BLOCKED[d.key]?.has(time);
+        if (isBlocked) {
+          tbody += `<td><button class="slot-btn slot-blocked" disabled>예약 불가</button></td>`;
+          return;
+        }
+        const key = `${d.key}_${time.replace(':','_')}`;
+        const bk  = bookings[key];
+        if (bk) {
+          const isMine = MY_BOOKINGS.has(key);
+          const cls    = isMine ? 'slot-mine' : 'slot-taken';
+          const nm     = bk.name ? `<br><span style="font-weight:400;font-size:9px;opacity:0.85">${bk.name}</span>` : '';
+          tbody += `<td><button class="slot-btn ${cls}" data-key="${key}">${bk.team}${nm}</button></td>`;
+        } else {
+          tbody += `<td><button class="slot-btn slot-free" data-key="${key}">+</button></td>`;
+        }
+      });
+      tbody += '</tr>';
+    });
+    table.querySelector('tbody').innerHTML = tbody;
+
+    // 이벤트 위임
+    table.querySelector('tbody').onclick = (e) => {
+      const btn = e.target.closest('button[data-key]');
+      if (btn) handleClick(btn.dataset.key);
+    };
+
+    updateStats();
+  }
+
+  function updateStats() {
+    let total = 0, booked = 0;
+    SLOTS.forEach(time => {
+      DAYS.forEach(d => {
+        if (!BLOCKED[d.key]?.has(time)) {
+          total++;
+          const key = `${d.key}_${time.replace(':','_')}`;
+          if (bookings[key]) booked++;
+        }
+      });
+    });
+    document.getElementById('statTotal').textContent  = total;
+    document.getElementById('statFree').textContent   = total - booked;
+    document.getElementById('statBooked').textContent = booked;
+  }
+
+  function handleClick(key) {
+    const bk = bookings[key];
+    if (bk) {
+      if (MY_BOOKINGS.has(key)) {
+        if (confirm(`[${bk.team}${bk.name ? ' · ' + bk.name : ''}] 예약을 취소하시겠습니까?`)) {
+          remove(ref(db, `meeting_bookings/${key}`));
+          MY_BOOKINGS.delete(key);
+          saveMine();
+        }
+      } else {
+        alert('이미 다른 팀이 예약한 슬랏입니다.');
+      }
+      return;
+    }
+    pendingKey = key;
+    const [dayKey, h, m] = key.split('_');
+    const day  = DAYS.find(d => d.key === dayKey);
+    const time = `${h}:${m}`;
+    document.getElementById('modalDesc').textContent = `${day.label}  ${time}`;
+    document.getElementById('teamSelect').value = '';
+    document.getElementById('nameInput').value  = '';
+    document.getElementById('modalBg').classList.add('open');
+  }
+
+  document.getElementById('btnCancel').onclick = () => {
+    document.getElementById('modalBg').classList.remove('open');
+    pendingKey = null;
+  };
+
+  document.getElementById('btnConfirm').onclick = () => {
+    const team = document.getElementById('teamSelect').value;
+    const name = document.getElementById('nameInput').value.trim();
+    if (!team) { alert('팀을 선택해주세요.'); return; }
+    const data = { team, name };
+    set(ref(db, `meeting_bookings/${pendingKey}`), data);
+    MY_BOOKINGS.add(pendingKey);
+    saveMine();
+    document.getElementById('modalBg').classList.remove('open');
+    pendingKey = null;
+  };
+
+  document.getElementById('modalBg').onclick = (e) => {
+    if (e.target === document.getElementById('modalBg')) {
+      document.getElementById('modalBg').classList.remove('open');
+      pendingKey = null;
+    }
+  };
+
+  function setStatus(msg) {
+    document.getElementById('statusBar').textContent = msg;
+  }
+</script>
+</body>
+</html>
