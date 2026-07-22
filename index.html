@@ -1,398 +1,432 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영업관리시스템 요구사항 파악 미팅</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>비즈솔루션본부 AI TF 모집</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --orange:#F6520A;
+  --orange-deep:#FF3C13;
+  --ink:#191817;
+  --sub:#6E6862;
+  --line:#E8E3DD;
+  --paper:#FFFFFF;
+  --bg:#F7F4F0;
+  --ok:#1B7F4D;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-      background: #f5f5f3;
-      color: #1a1a1a;
-      min-height: 100vh;
-      padding: 2rem 1rem;
-    }
+/* ===== Hero ===== */
+.hero{
+  background:var(--ink);color:#fff;
+  padding:56px 0 48px;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;right:-80px;top:-80px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,var(--orange-deep),var(--orange));
+  opacity:.9;filter:blur(2px);
+}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{
+  display:inline-block;font-size:13px;font-weight:700;letter-spacing:.12em;
+  color:var(--orange);border:1px solid rgba(246,82,10,.5);
+  padding:5px 12px;border-radius:100px;margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(38px,9vw,56px);font-weight:900;line-height:1.12;
+  letter-spacing:-.02em;margin-bottom:14px;
+}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p.lead{font-size:16px;color:rgba(255,255,255,.75);max-width:420px;margin-bottom:28px}
 
-    .container { max-width: 960px; margin: 0 auto; }
+/* D-day */
+.dday{
+  display:inline-flex;align-items:baseline;gap:10px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:14px;padding:14px 18px;
+}
+.dday .label{font-size:12px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.dday .value{font-size:26px;font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums}
+.dday .until{font-size:13px;color:rgba(255,255,255,.55)}
 
-    .header { margin-bottom: 1.5rem; }
-    .header h1 { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 6px; }
-    .header p { font-size: 13px; color: #666; }
+/* ===== Sections ===== */
+section{padding:48px 0}
+.sec-label{
+  font-size:13px;font-weight:800;color:var(--orange);
+  letter-spacing:.14em;margin-bottom:10px;
+}
+h2{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:14px}
+.sec-desc{color:var(--sub);font-size:15px;margin-bottom:28px}
 
-    .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1rem; }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
-    .legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
-    .dot-free  { background: #fff; border: 1px solid #ccc; }
-    .dot-mine  { background: #185FA5; }
-    .dot-taken { background: #FCEBEB; border: 1px solid #F09595; }
-    .dot-block { background: #eee; border: 1px solid #ddd; }
+/* 활동 카드 */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.cards{grid-template-columns:1fr}}
+.card{
+  background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  padding:22px 20px;
+}
+.card .ico{font-size:26px;margin-bottom:12px;display:block}
+.card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--sub);line-height:1.55}
 
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    }
+/* 모집 개요 */
+.overview{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.overview dl{display:flex;padding:16px 20px;border-bottom:1px solid var(--line);gap:16px}
+.overview dl:last-child{border-bottom:none}
+.overview dt{width:88px;flex-shrink:0;font-size:14px;font-weight:700;color:var(--sub)}
+.overview dd{font-size:14.5px;font-weight:600}
+.overview dd small{display:block;font-weight:400;color:var(--sub);font-size:13px;margin-top:2px}
 
-    table { border-collapse: collapse; width: 100%; min-width: 680px; }
+/* ===== Form ===== */
+.form-sec{background:var(--paper);border-top:1px solid var(--line)}
+.field{margin-bottom:26px}
+label.f-label{display:block;font-size:14.5px;font-weight:700;margin-bottom:9px}
+label.f-label .req{color:var(--orange);margin-left:2px}
+label.f-label .opt{color:var(--sub);font-weight:500;font-size:12.5px;margin-left:6px}
+select,input[type=text],textarea{
+  width:100%;font-family:inherit;font-size:15.5px;color:var(--ink);
+  background:var(--bg);border:1.5px solid var(--line);border-radius:12px;
+  padding:13px 14px;transition:border-color .15s;
+  appearance:none;-webkit-appearance:none;
+}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236E6862' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--orange);background:#fff}
+select:disabled{opacity:.45}
+textarea{resize:vertical;min-height:110px}
+.hint{font-size:12.5px;color:var(--sub);margin-top:6px}
+.count{font-size:12px;color:var(--sub);text-align:right;margin-top:4px;font-variant-numeric:tabular-nums}
 
-    thead th {
-      font-size: 12px; font-weight: 600; color: #555;
-      padding: 10px 6px; text-align: center;
-      border-bottom: 2px solid #ddd;
-      background: #f9f9f7;
-      position: sticky; top: 0; z-index: 2;
-    }
-    thead th:first-child { text-align: left; padding-left: 14px; width: 62px; }
+/* 체크/라디오 칩 */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{
+  display:inline-block;font-size:14px;font-weight:600;
+  padding:9px 15px;border-radius:100px;cursor:pointer;
+  background:var(--bg);border:1.5px solid var(--line);color:var(--sub);
+  transition:all .12s;user-select:none;
+}
+.chip input:checked + span{background:var(--orange);border-color:var(--orange);color:#fff}
+.chip input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
 
-    tbody td {
-      padding: 2px 3px;
-      border-bottom: 1px solid #eee;
-      border-right: 1px solid #eee;
-      text-align: center;
-    }
-    tbody td:last-child { border-right: none; }
+.submit-btn{
+  width:100%;font-family:inherit;font-size:16.5px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,var(--orange),var(--orange-deep));
+  border:none;border-radius:14px;padding:17px;cursor:pointer;
+  transition:transform .1s,opacity .15s;margin-top:8px;
+}
+.submit-btn:active{transform:scale(.985)}
+.submit-btn:disabled{opacity:.55;cursor:default}
+.err-msg{
+  display:none;background:#FDECEC;color:#C0392B;font-size:14px;font-weight:600;
+  border-radius:12px;padding:13px 16px;margin-bottom:16px;
+}
 
-    td.time-cell {
-      font-size: 11px; color: #999;
-      padding: 2px 10px;
-      white-space: nowrap;
-      background: #f9f9f7;
-      text-align: left;
-      border-right: 1px solid #ddd;
-    }
-    td.time-cell.hour { font-weight: 600; color: #666; }
+/* 완료 화면 */
+.done{display:none;text-align:center;padding:64px 0}
+.done .mark{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 22px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-deep));
+  display:flex;align-items:center;justify-content:center;
+}
+.done .mark svg{width:34px;height:34px}
+.done h2{margin-bottom:10px}
+.done p{color:var(--sub);font-size:15px}
 
-    tr.lunch-above td { border-bottom: 2.5px solid #378ADD; }
-    tr.lunch-below td { border-top: 2.5px solid #378ADD; }
-    tbody tr:last-child td { border-bottom: none; }
+/* 마감 화면 */
+.closed{display:none;text-align:center;padding:64px 0}
+.closed h2{margin-bottom:10px}
+.closed p{color:var(--sub);font-size:15px}
 
-    .slot-btn {
-      width: 100%; min-height: 28px;
-      border-radius: 4px; border: none;
-      cursor: pointer; font-size: 10px; font-weight: 600;
-      transition: all 0.12s; padding: 2px 3px; line-height: 1.3;
-    }
-    .slot-free  { background: #fff; border: 1px solid #ddd !important; color: #aaa; }
-    .slot-free:hover { background: #E6F1FB; border-color: #378ADD !important; color: #185FA5; }
-    .slot-mine  { background: #185FA5; color: #fff; }
-    .slot-mine:hover { background: #134f8a; }
-    .slot-taken { background: #FCEBEB; border: 1px solid #F09595 !important; color: #A32D2D; cursor: not-allowed; }
-    .slot-blocked { background: #f0f0ee; border: 1px solid #e0e0de !important; color: #bbb; cursor: not-allowed; font-size: 9px; font-style: italic; }
+footer{padding:36px 0 56px;text-align:center;border-top:1px solid var(--line)}
+footer p{font-size:13px;color:var(--sub)}
+footer a{color:var(--orange);font-weight:600;text-decoration:none}
 
-    .stats {
-      display: flex; gap: 12px; margin-top: 1.2rem; flex-wrap: wrap;
-    }
-    .stat-card {
-      background: #fff; border: 1px solid #e8e8e6;
-      border-radius: 8px; padding: 12px 18px; flex: 1; min-width: 100px;
-    }
-    .stat-label { font-size: 11px; color: #888; margin-bottom: 3px; }
-    .stat-val { font-size: 22px; font-weight: 600; color: #111; }
-
-    .status-bar {
-      margin-top: 8px; font-size: 11px; color: #999; min-height: 18px;
-    }
-    .note { font-size: 11px; color: #999; margin-top: 6px; }
-
-    /* Modal */
-    .modal-bg {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.4);
-      align-items: center; justify-content: center; z-index: 100;
-    }
-    .modal-bg.open { display: flex; }
-    .modal {
-      background: #fff; border-radius: 14px;
-      border: 1px solid #ddd; padding: 1.6rem;
-      width: 340px; max-width: 92vw;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.14);
-    }
-    .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 5px; color: #111; }
-    .modal .slot-info {
-      font-size: 13px; color: #555;
-      background: #f5f5f3; border-radius: 8px;
-      padding: 8px 12px; margin-bottom: 16px;
-    }
-    .modal select, .modal input {
-      width: 100%; padding: 9px 11px;
-      border: 1px solid #ccc; border-radius: 8px;
-      font-size: 14px; color: #111;
-      margin-bottom: 10px; background: #fff;
-      appearance: auto;
-    }
-    .modal select:focus, .modal input:focus {
-      outline: none; border-color: #378ADD;
-      box-shadow: 0 0 0 2px rgba(55,138,221,0.15);
-    }
-    .modal-btns { display: flex; gap: 8px; margin-top: 4px; }
-    .btn-cancel {
-      flex: 1; padding: 9px; border: 1px solid #ccc;
-      border-radius: 8px; background: #fff; color: #555;
-      cursor: pointer; font-size: 13px;
-    }
-    .btn-cancel:hover { background: #f5f5f3; }
-    .btn-confirm {
-      flex: 2; padding: 9px; border: none;
-      border-radius: 8px; background: #185FA5; color: #fff;
-      cursor: pointer; font-size: 13px; font-weight: 600;
-    }
-    .btn-confirm:hover { background: #134f8a; }
-
-    /* Firebase config notice */
-    .config-notice {
-      background: #FFF8E6; border: 1px solid #F5C97A;
-      border-radius: 10px; padding: 1rem 1.2rem;
-      margin-bottom: 1.5rem; font-size: 13px; color: #7a5c00;
-    }
-    .config-notice strong { display: block; margin-bottom: 4px; font-size: 14px; }
-    .config-notice code {
-      display: block; margin-top: 8px; padding: 8px 10px;
-      background: #fff; border-radius: 6px; border: 1px solid #f0d58a;
-      font-family: 'Courier New', monospace; font-size: 12px; color: #333;
-      line-height: 1.7; white-space: pre-wrap;
-    }
-  </style>
+.loading-overlay{
+  display:none;position:fixed;inset:0;background:rgba(255,255,255,.75);
+  z-index:99;align-items:center;justify-content:center;
+}
+.spinner{
+  width:44px;height:44px;border-radius:50%;
+  border:4px solid var(--line);border-top-color:var(--orange);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .spinner{animation-duration:2s}
+}
+</style>
 </head>
 <body>
-<div class="container">
-  
-  <div class="header">
-    <h1>영업관리시스템 요구사항 파악 미팅</h1>
-    <p>4월 9일(목) – 4월 15일(수) &nbsp;·&nbsp; 오전 8시 – 오후 5시 &nbsp;·&nbsp; 30분 단위 &nbsp;·&nbsp; 점심(11:30–13:00) 제외</p>
-  </div>
 
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot dot-free"></div>예약 가능</div>
-    <div class="legend-item"><div class="legend-dot dot-mine"></div>내 팀 예약</div>
-    <div class="legend-item"><div class="legend-dot dot-taken"></div>타팀 예약</div>
-    <div class="legend-item"><div class="legend-dot dot-block"></div>예약 불가</div>
-  </div>
-
-  <div class="table-wrap">
-    <table id="scheduleTable"><thead></thead><tbody></tbody></table>
-  </div>
-
-  <div class="stats">
-    <div class="stat-card"><div class="stat-label">예약 가능 슬랏</div><div class="stat-val" id="statTotal">-</div></div>
-    <div class="stat-card"><div class="stat-label">남은 슬랏</div><div class="stat-val" id="statFree">-</div></div>
-    <div class="stat-card"><div class="stat-label">예약 완료</div><div class="stat-val" id="statBooked">-</div></div>
-  </div>
-
-  <div class="status-bar" id="statusBar">Firebase 연결 중...</div>
-  <p class="note">* 내 팀 예약(파란색)을 다시 클릭하면 취소됩니다. 예약 정보는 실시간으로 반영됩니다.</p>
-</div>
-
-<!-- 예약 모달 -->
-<div class="modal-bg" id="modalBg">
-  <div class="modal">
-    <h3>슬랏 예약</h3>
-    <div class="slot-info" id="modalDesc"></div>
-    <select id="teamSelect">
-      <option value="">팀 선택...</option>
-      <option>마솔1팀</option>
-      <option>마솔2팀</option>
-      <option>마솔3팀</option>
-      <option>마솔4팀</option>
-      <option>디지털사업팀</option>
-      <option>솔루션기획2팀</option>
-      <option>콘텐트사업팀</option>
-      <option>이노베이션랩</option>
-      <option>콘텐트개발팀</option>
-      <option>매체사업팀</option>
-      <option>운영지원팀</option>
-    </select>
-    <input type="text" id="nameInput" placeholder="이름 (선택사항)" maxlength="20" />
-    <div class="modal-btns">
-      <button class="btn-cancel" id="btnCancel">취소</button>
-      <button class="btn-confirm" id="btnConfirm">예약 확정</button>
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">비즈솔루션본부</span>
+    <h1>AI TF<br><em>합류할 사람</em>을<br>찾습니다</h1>
+    <p class="lead">AI로 일하는 방식을 먼저 바꾸는 사람들. 본부의 AI 활용 문화를 함께 만들어갈 멤버를 모집합니다.</p>
+    <div class="dday">
+      <span class="label">신청 마감</span>
+      <span class="value" id="ddayValue">D-0</span>
+      <span class="until">7.27(월) 자정까지</span>
     </div>
   </div>
-</div>
+</header>
 
-<!-- Firebase SDK -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<!-- ===== TF 소개 ===== -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">WHAT WE DO</div>
+    <h2>AI TF는 이런 일을 합니다</h2>
+    <p class="sec-desc">거창한 이론 공부가 아니라, 지금 하는 업무에 AI를 붙여 실제로 바꿔보는 실행 조직입니다.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="ico">⚡️</span>
+        <h3>업무 자동화</h3>
+        <p>반복되는 보고서, 데이터 정리, 문서 작업을 AI로 자동화하는 실전 프로젝트</p>
+      </div>
+      <div class="card">
+        <span class="ico">🎬</span>
+        <h3>AI 콘텐츠 제작</h3>
+        <p>이미지·영상 생성 AI를 활용한 제안서, 광고 시안, 이벤트 콘텐츠 제작</p>
+      </div>
+      <div class="card">
+        <span class="ico">🛠</span>
+        <h3>영업지원 도구 개발</h3>
+        <p>대시보드, 리포트 생성기 등 본부 맞춤형 AI 도구를 직접 만들고 개선</p>
+      </div>
+      <div class="card">
+        <span class="ico">📣</span>
+        <h3>사내 전파</h3>
+        <p>TF에서 검증한 활용법을 본부 전체에 공유하는 세션 운영</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ===== 모집 개요 ===== -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-label">RECRUIT</div>
+    <h2>모집 개요</h2>
+    <div class="overview">
+      <dl><dt>대상</dt><dd>비즈솔루션본부 전 구성원</dd></dl>
+      <dl><dt>인원</dt><dd id="recruitCount">00명<small>신청 결과에 따라 확정</small></dd></dl>
+      <dl><dt>활동 기간</dt><dd>선발 시 ~ 2026. 12. 31</dd></dl>
+      <dl><dt>신청 마감</dt><dd>2026. 7. 27 (월) 자정</dd></dl>
+    </div>
+  </div>
+</section>
 
-  const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyALLrii1B889n_G2XK6OQwMtqHAd5YT_1E",
-    authDomain: "test-meeting-volume1.firebaseapp.com",
-    databaseURL: "https://test-meeting-volume1-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "test-meeting-volume1",
+<!-- ===== 신청 폼 ===== -->
+<section class="form-sec" id="applySec">
+  <div class="wrap">
+    <div class="sec-label">APPLY</div>
+    <h2>신청하기</h2>
+    <p class="sec-desc">1분이면 충분합니다. 부담 없이 신청해 주세요.</p>
+
+    <div class="err-msg" id="errMsg"></div>
+
+    <div id="formArea">
+      <div class="field">
+        <label class="f-label" for="name">이름<span class="req">*</span></label>
+        <input type="text" id="name" placeholder="홍길동" autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label class="f-label" for="team">소속팀<span class="req">*</span></label>
+        <input type="text" id="team" placeholder="예: 솔루션기획1팀">
+      </div>
+
+      <div class="field">
+        <label class="f-label">사용해 본 AI<span class="req">*</span></label>
+        <div class="chips" id="expChips">
+          <label class="chip"><input type="checkbox" value="ChatGPT"><span>ChatGPT</span></label>
+          <label class="chip"><input type="checkbox" value="Claude"><span>Claude</span></label>
+          <label class="chip"><input type="checkbox" value="Gemini"><span>Gemini</span></label>
+          <label class="chip"><input type="checkbox" value="이미지/영상 AI"><span>이미지/영상 AI</span></label>
+          <label class="chip"><input type="checkbox" value="코딩 AI"><span>코딩 AI</span></label>
+          <label class="chip"><input type="checkbox" value="사용 경험 없음"><span>사용 경험 없음</span></label>
+        </div>
+        <p class="hint">해당하는 것을 모두 선택하세요. 경험이 없어도 괜찮습니다.</p>
+      </div>
+
+      <div class="field">
+        <label class="f-label">현재 활용 수준<span class="req">*</span></label>
+        <div class="chips" id="levelChips">
+          <label class="chip"><input type="radio" name="level" value="검색용으로 가끔"><span>검색용으로 가끔</span></label>
+          <label class="chip"><input type="radio" name="level" value="업무에 종종 활용"><span>업무에 종종 활용</span></label>
+          <label class="chip"><input type="radio" name="level" value="자동화/제작까지 활용"><span>자동화·제작까지</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="f-label">관심 분야<span class="req">*</span></label>
+        <div class="chips" id="interestChips">
+          <label class="chip"><input type="checkbox" value="업무 자동화"><span>업무 자동화</span></label>
+          <label class="chip"><input type="checkbox" value="문서/보고서"><span>문서·보고서</span></label>
+          <label class="chip"><input type="checkbox" value="데이터 분석"><span>데이터 분석</span></label>
+          <label class="chip"><input type="checkbox" value="콘텐츠 제작"><span>콘텐츠 제작</span></label>
+          <label class="chip"><input type="checkbox" value="영업지원 도구"><span>영업지원 도구</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="f-label" for="motive">지원 동기<span class="req">*</span></label>
+        <textarea id="motive" maxlength="300" placeholder="AI TF에 지원하는 이유를 자유롭게 적어주세요. (200자 내외)"></textarea>
+        <div class="count"><span id="motiveCount">0</span> / 300</div>
+      </div>
+
+      <div class="field">
+        <label class="f-label" for="wish">TF에서 해보고 싶은 것 한 가지<span class="opt">선택</span></label>
+        <input type="text" id="wish" maxlength="100" placeholder="예: 주간보고 자동 요약 만들어보기">
+      </div>
+
+      <button class="submit-btn" id="submitBtn">신청 완료하기</button>
+    </div>
+
+    <!-- 완료 -->
+    <div class="done" id="doneArea">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5l5 5 10-11" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2>신청이 완료됐습니다</h2>
+      <p>선발 결과는 개별 안내드립니다.<br>함께하게 되어 기대됩니다! 🙌</p>
+    </div>
+
+    <!-- 마감 -->
+    <div class="closed" id="closedArea">
+      <h2>모집이 마감됐습니다</h2>
+      <p>관심 가져주셔서 감사합니다.<br>다음 기회에 다시 만나요.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>문의: 솔루션기획1팀 신동민 팀장 · <a href="mailto:shin.dongmin@joongang.co.kr">shin.dongmin@joongang.co.kr</a></p>
+  </div>
+</footer>
+
+<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
+
+<script>
+/* ================= CONFIG ================= */
+const GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'; // ← GAS 배포 URL로 교체
+const DEADLINE = new Date('2026-07-28T00:00:00+09:00'); // 7/27(월) 자정 = 28일 00:00
+const RECRUIT_COUNT = '00명'; // 확정되면 수정 (예: '8명 내외')
+
+/* ================= 초기화 ================= */
+const $ = id => document.getElementById(id);
+
+// 인원 표시
+$('recruitCount').firstChild.textContent = RECRUIT_COUNT;
+
+// D-day
+(function renderDday(){
+  const now = new Date();
+  const diff = DEADLINE - now;
+  const el = $('ddayValue');
+  if (diff <= 0) {
+    el.textContent = '마감';
+    $('formArea').style.display = 'none';
+    $('closedArea').style.display = 'block';
+    return;
+  }
+  const days = Math.floor(diff / 86400000);
+  el.textContent = days === 0 ? 'D-DAY' : 'D-' + days;
+})();
+
+// '사용 경험 없음' 배타 처리
+$('expChips').addEventListener('change', e => {
+  const boxes = [...$('expChips').querySelectorAll('input')];
+  const none = boxes.find(b => b.value === '사용 경험 없음');
+  if (e.target === none && none.checked) {
+    boxes.forEach(b => { if (b !== none) b.checked = false; });
+  } else if (e.target !== none && e.target.checked) {
+    none.checked = false;
+  }
+});
+
+// 글자수 카운터
+$('motive').addEventListener('input', () => {
+  $('motiveCount').textContent = $('motive').value.length;
+});
+
+/* ================= 제출 ================= */
+function getChecked(id){
+  return [...$(id).querySelectorAll('input:checked')].map(i => i.value);
+}
+function showErr(msg){
+  const e = $('errMsg');
+  e.textContent = msg;
+  e.style.display = 'block';
+  e.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+$('submitBtn').addEventListener('click', async () => {
+  $('errMsg').style.display = 'none';
+
+  if (new Date() >= DEADLINE) {
+    $('formArea').style.display = 'none';
+    $('closedArea').style.display = 'block';
+    return;
+  }
+
+  const data = {
+    team: $('team').value.trim(),
+    name: $('name').value.trim(),
+    experience: getChecked('expChips').join(', '),
+    level: (document.querySelector('input[name=level]:checked')||{}).value || '',
+    interest: getChecked('interestChips').join(', '),
+    motive: $('motive').value.trim(),
+    wish: $('wish').value.trim()
   };
 
-  // ─── 일정 데이터 ───────────────────────────────────────────
-  const DAYS = [
-    { label: '4/9 (목)',  key: 'thu' },
-    { label: '4/10 (금)', key: 'fri' },
-    { label: '4/13 (월)', key: 'mon' },
-    { label: '4/14 (화)', key: 'tue' },
-    { label: '4/15 (수)', key: 'wed' },
-    { label: '4/16 (목)', key: 'thu2' },
-  ];
+  if (!data.name) return showErr('이름을 입력해 주세요.');
+  if (!data.team) return showErr('소속팀을 입력해 주세요.');
+  if (!data.experience) return showErr('사용해 본 AI를 선택해 주세요.');
+  if (!data.level) return showErr('현재 활용 수준을 선택해 주세요.');
+  if (!data.interest) return showErr('관심 분야를 선택해 주세요.');
+  if (!data.motive) return showErr('지원 동기를 입력해 주세요.');
 
-  const LUNCH = new Set(['11:30', '12:00', '12:30']);
+  $('submitBtn').disabled = true;
+  $('loading').style.display = 'flex';
 
-  const BLOCKED = {
-    thu: new Set(['09:30']),
-    mon: new Set(['10:00', '10:30', '11:00', '14:00']),
-    tue: new Set(['09:00', '09:30', '10:30', '11:00', '13:00', '13:30']),
-    thu2: new Set(['09:30', '16:00', '16:30']),
-  };
-
-  const ALL_SLOTS = [];
-  for (let h = 8; h < 17; h++) {
-    ALL_SLOTS.push(`${String(h).padStart(2,'0')}:00`);
-    ALL_SLOTS.push(`${String(h).padStart(2,'0')}:30`);
-  }
-  const SLOTS = ALL_SLOTS.filter(t => !LUNCH.has(t));
-
-  // ─── 상태 ─────────────────────────────────────────────────
-  let bookings = {};
-  let pendingKey = null;
-  // 이 세션에서 내가 예약한 슬랏 키 집합 (새로고침하면 초기화 — 타인 예약 구분용)
-  const MY_BOOKINGS = new Set(JSON.parse(sessionStorage.getItem('myBookings') || '[]'));
-
-  function saveMine() {
-    sessionStorage.setItem('myBookings', JSON.stringify([...MY_BOOKINGS]));
-  }
-
-  // ─── Firebase 초기화 ────────────────────────────────────────
-  const app = initializeApp(FIREBASE_CONFIG);
-  const db  = getDatabase(app);
-  const dbRef = ref(db, 'meeting_bookings');
-
-  setStatus('실시간 연결 중...');
-  onValue(dbRef, (snapshot) => {
-    bookings = snapshot.val() || {};
-    renderTable();
-    setStatus('✓ 실시간 연결됨');
-  }, (err) => {
-    setStatus('⚠️ 연결 실패: ' + err.message);
-  });
-
-  // ─── 렌더링 ──────────────────────────────────────────────────
-  function renderTable() {
-    const table = document.getElementById('scheduleTable');
-    // thead
-    let thead = '<tr><th>시간</th>';
-    DAYS.forEach(d => { thead += `<th>${d.label}</th>`; });
-    thead += '</tr>';
-    table.querySelector('thead').innerHTML = thead;
-
-    // tbody
-    let tbody = '';
-    SLOTS.forEach(time => {
-      const isHour      = time.endsWith(':00');
-      const lunchAbove  = time === '11:00';
-      const lunchBelow  = time === '13:00';
-      const rowClass    = lunchAbove ? 'lunch-above' : lunchBelow ? 'lunch-below' : '';
-
-      tbody += `<tr class="${rowClass}">`;
-      tbody += `<td class="time-cell${isHour ? ' hour' : ''}">${time}</td>`;
-
-      DAYS.forEach(d => {
-        const isBlocked = BLOCKED[d.key]?.has(time);
-        if (isBlocked) {
-          tbody += `<td><button class="slot-btn slot-blocked" disabled>예약 불가</button></td>`;
-          return;
-        }
-        const key = `${d.key}_${time.replace(':','_')}`;
-        const bk  = bookings[key];
-        if (bk) {
-          const isMine = MY_BOOKINGS.has(key);
-          const cls    = isMine ? 'slot-mine' : 'slot-taken';
-          const nm     = bk.name ? `<br><span style="font-weight:400;font-size:9px;opacity:0.85">${bk.name}</span>` : '';
-          tbody += `<td><button class="slot-btn ${cls}" data-key="${key}">${bk.team}${nm}</button></td>`;
-        } else {
-          tbody += `<td><button class="slot-btn slot-free" data-key="${key}">+</button></td>`;
-        }
-      });
-      tbody += '</tr>';
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(data)
     });
-    table.querySelector('tbody').innerHTML = tbody;
-
-    // 이벤트 위임
-    table.querySelector('tbody').onclick = (e) => {
-      const btn = e.target.closest('button[data-key]');
-      if (btn) handleClick(btn.dataset.key);
-    };
-
-    updateStats();
-  }
-
-  function updateStats() {
-    let total = 0, booked = 0;
-    SLOTS.forEach(time => {
-      DAYS.forEach(d => {
-        if (!BLOCKED[d.key]?.has(time)) {
-          total++;
-          const key = `${d.key}_${time.replace(':','_')}`;
-          if (bookings[key]) booked++;
-        }
-      });
-    });
-    document.getElementById('statTotal').textContent  = total;
-    document.getElementById('statFree').textContent   = total - booked;
-    document.getElementById('statBooked').textContent = booked;
-  }
-
-  function handleClick(key) {
-    const bk = bookings[key];
-    if (bk) {
-      if (MY_BOOKINGS.has(key)) {
-        if (confirm(`[${bk.team}${bk.name ? ' · ' + bk.name : ''}] 예약을 취소하시겠습니까?`)) {
-          remove(ref(db, `meeting_bookings/${key}`));
-          MY_BOOKINGS.delete(key);
-          saveMine();
-        }
-      } else {
-        alert('이미 다른 팀이 예약한 슬랏입니다.');
-      }
-      return;
+    const json = await res.json();
+    if (json.result === 'duplicate') {
+      showErr('이미 신청하셨습니다. 문의사항은 신동민 팀장에게 연락해 주세요.');
+    } else if (json.result === 'success') {
+      $('formArea').style.display = 'none';
+      $('doneArea').style.display = 'block';
+      $('doneArea').scrollIntoView({behavior:'smooth', block:'center'});
+    } else {
+      showErr('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
     }
-    pendingKey = key;
-    const [dayKey, h, m] = key.split('_');
-    const day  = DAYS.find(d => d.key === dayKey);
-    const time = `${h}:${m}`;
-    document.getElementById('modalDesc').textContent = `${day.label}  ${time}`;
-    document.getElementById('teamSelect').value = '';
-    document.getElementById('nameInput').value  = '';
-    document.getElementById('modalBg').classList.add('open');
+  } catch (err) {
+    showErr('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+  } finally {
+    $('submitBtn').disabled = false;
+    $('loading').style.display = 'none';
   }
-
-  document.getElementById('btnCancel').onclick = () => {
-    document.getElementById('modalBg').classList.remove('open');
-    pendingKey = null;
-  };
-
-  document.getElementById('btnConfirm').onclick = () => {
-    const team = document.getElementById('teamSelect').value;
-    const name = document.getElementById('nameInput').value.trim();
-    if (!team) { alert('팀을 선택해주세요.'); return; }
-    const data = { team, name };
-    set(ref(db, `meeting_bookings/${pendingKey}`), data);
-    MY_BOOKINGS.add(pendingKey);
-    saveMine();
-    document.getElementById('modalBg').classList.remove('open');
-    pendingKey = null;
-  };
-
-  document.getElementById('modalBg').onclick = (e) => {
-    if (e.target === document.getElementById('modalBg')) {
-      document.getElementById('modalBg').classList.remove('open');
-      pendingKey = null;
-    }
-  };
-
-  function setStatus(msg) {
-    document.getElementById('statusBar').textContent = msg;
-  }
+});
 </script>
 </body>
 </html>
