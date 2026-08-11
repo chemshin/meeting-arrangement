@@ -2,431 +2,425 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>비즈솔루션본부 AI활용 TF 모집</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비즈솔루션본부 월요초대석 참석 신청</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --orange:#F6520A;
-  --orange-deep:#FF3C13;
-  --ink:#191817;
-  --sub:#6E6862;
-  --line:#E8E3DD;
-  --paper:#FFFFFF;
-  --bg:#F7F4F0;
-  --ok:#1B7F4D;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
-  background:var(--bg);color:var(--ink);
-  -webkit-font-smoothing:antialiased;
-  line-height:1.6;
-}
-.wrap{max-width:640px;margin:0 auto;padding:0 20px}
+  :root{
+    --ink:#171B22; --ink-soft:#3A4048;
+    --paper:#F3F2EF; --card:#FFFFFF;
+    --accent:#C8102E; --accent-deep:#9E0C24;
+    --green:#1F7A54; --slate:#5B6472; --line:#E4E1D9; --line-soft:#EEECE6;
+    --shadow:0 1px 2px rgba(23,27,34,.04), 0 8px 24px rgba(23,27,34,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Pretendard',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .serif{font-family:'Nanum Myeongjo',serif}
+  button{font-family:inherit;cursor:pointer}
+  ::selection{background:var(--accent);color:#fff}
 
-/* ===== Hero ===== */
-.hero{
-  background:var(--ink);color:#fff;
-  padding:56px 0 48px;position:relative;overflow:hidden;
-}
-.hero::after{
-  content:'';position:absolute;right:-80px;top:-80px;
-  width:280px;height:280px;border-radius:50%;
-  background:radial-gradient(circle,var(--orange-deep),var(--orange));
-  opacity:.9;filter:blur(2px);
-}
-.hero .wrap{position:relative;z-index:1}
-.eyebrow{
-  display:inline-block;font-size:13px;font-weight:700;letter-spacing:.12em;
-  color:var(--orange);border:1px solid rgba(246,82,10,.5);
-  padding:5px 12px;border-radius:100px;margin-bottom:20px;
-}
-.hero h1{
-  font-size:clamp(38px,9vw,56px);font-weight:900;line-height:1.12;
-  letter-spacing:-.02em;margin-bottom:14px;
-}
-.hero h1 em{font-style:normal;color:var(--orange)}
-.hero p.lead{font-size:16px;color:rgba(255,255,255,.75);max-width:420px;margin-bottom:28px}
+  header.masthead{background:var(--ink);color:#F6F4EF;padding:18px 22px 0;position:sticky;top:0;z-index:40;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+  .mast-top{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;max-width:1040px;margin:0 auto}
+  .nameplate .title{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(24px,4vw,36px);letter-spacing:.05em;line-height:1}
+  .nameplate .title .em{color:var(--accent)}
+  .nameplate .kicker{font-size:11px;letter-spacing:.32em;color:#B9BEC7;text-transform:uppercase;margin-top:7px}
+  .rule-double{max-width:1040px;margin:12px auto 0;border-top:2px solid #4A515C;padding-top:3px}
+  .rule-double .inner{border-top:1px solid #333B46;height:0}
+  nav.tabs{max-width:1040px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:8px 0 0}
+  nav.tabs button{background:transparent;border:0;color:#AEB4BE;padding:11px 18px 13px;font-size:14px;font-weight:600;border-bottom:2.5px solid transparent;white-space:nowrap}
+  nav.tabs button:hover{color:#F6F4EF}
+  nav.tabs button.active{color:#fff;border-bottom-color:var(--accent)}
+  nav.tabs .tab-note{font-size:11px;font-weight:600;color:#7E8590;letter-spacing:0}
+  nav.tabs button:hover .tab-note{color:#AEB4BE}
 
-/* D-day */
-.dday{
-  display:inline-flex;align-items:baseline;gap:10px;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-  border-radius:14px;padding:14px 18px;
-}
-.dday .label{font-size:12px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.08em}
-.dday .value{font-size:26px;font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums}
-.dday .until{font-size:13px;color:rgba(255,255,255,.55)}
+  main{max-width:1040px;margin:0 auto;padding:30px 22px 80px}
+  .view{display:none;animation:fade .25s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.view,main *{animation:none!important}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
 
-/* ===== Sections ===== */
-section{padding:48px 0}
-.sec-label{
-  font-size:13px;font-weight:800;color:var(--orange);
-  letter-spacing:.14em;margin-bottom:10px;
-}
-h2{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:14px}
-.sec-desc{color:var(--sub);font-size:15px;margin-bottom:28px}
+  /* ---------- 신청 폼 ---------- */
+  .apply-head{max-width:640px;margin:0 auto 26px;text-align:center}
+  .apply-head h1{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(24px,4.2vw,33px);margin:0 0 10px;letter-spacing:-.01em;line-height:1.3}
+  .apply-head p{font-size:14px;color:var(--slate);margin:0}
+  .form-card{max-width:640px;margin:0 auto;padding:32px 34px}
+  .q{margin-bottom:26px}
+  .q > label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px;letter-spacing:.01em}
+  .q > label .num{display:inline-grid;place-items:center;width:20px;height:20px;background:var(--ink);color:#fff;border-radius:6px;font-size:11px;font-family:'Nanum Myeongjo',serif;margin-right:8px;vertical-align:1px}
+  .q > label .opt{font-weight:600;color:var(--slate);font-size:11.5px;margin-left:6px}
+  .q input[type=text],.q textarea{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:15px;color:var(--ink);background:var(--card)}
+  .q textarea{resize:vertical;min-height:76px;line-height:1.6}
+  .q input:focus,.q textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+  .week-cards{display:flex;flex-direction:column;gap:10px}
+  .radio-card{display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:11px;padding:14px 16px;cursor:pointer;transition:.15s;background:var(--card)}
+  .radio-card:hover{border-color:var(--slate)}
+  .radio-card.sel{border-color:var(--accent);background:#FEF6F7}
+  .radio-card .tick{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;display:grid;place-items:center}
+  .radio-card.sel .tick{border-color:var(--accent);background:var(--accent)}
+  .radio-card.sel .tick::after{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
+  .radio-card .ed{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:13px;color:var(--accent);width:52px;flex-shrink:0}
+  .radio-card .wtitle{font-weight:600;font-size:14.5px}
+  .radio-card .wdate{font-size:12.5px;color:var(--slate);margin-top:2px}
+  .week-loading{display:flex;align-items:center;gap:9px;color:var(--slate);font-size:13.5px;padding:16px;border:1px dashed var(--line);border-radius:11px}
+  .submit-btn{width:100%;padding:15px;border:0;border-radius:11px;background:var(--accent);color:#fff;font-size:15.5px;font-weight:700;transition:.15s}
+  .submit-btn:hover{background:var(--accent-deep)}
+  .submit-btn:disabled{opacity:.55;cursor:progress}
+  .form-note{font-size:12.5px;color:var(--slate);text-align:center;margin-top:14px}
 
-/* 활동 카드 */
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:480px){.cards{grid-template-columns:1fr}}
-.card{
-  background:var(--paper);border:1px solid var(--line);border-radius:16px;
-  padding:22px 20px;
-}
-.card .ico{font-size:26px;margin-bottom:12px;display:block}
-.card h3{font-size:16px;font-weight:700;margin-bottom:6px}
-.card p{font-size:13.5px;color:var(--sub);line-height:1.55}
+  .success{max-width:640px;margin:0 auto;padding:40px 34px;text-align:center}
+  .success .mark{width:64px;height:64px;border-radius:50%;background:#E6F3EC;color:var(--green);display:grid;place-items:center;margin:0 auto 20px;font-size:32px}
+  .success h2{font-family:'Nanum Myeongjo',serif;font-size:24px;margin:0 0 10px}
+  .success p{color:var(--ink-soft);font-size:14.5px;margin:0 0 6px}
+  .success .detail{background:var(--paper);border-radius:11px;padding:16px 18px;margin:22px 0;text-align:left;font-size:14px}
+  .success .detail .r{display:flex;gap:12px;padding:5px 0}
+  .success .detail .r b{color:var(--slate);font-weight:600;width:70px;flex-shrink:0;font-size:13px}
+  .btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:11px 20px;border-radius:10px;font-size:14px;font-weight:600;transition:.15s;text-decoration:none;display:inline-block}
+  .btn:hover{border-color:var(--slate)}
 
-/* 모집 개요 */
-.overview{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.overview dl{display:flex;padding:16px 20px;border-bottom:1px solid var(--line);gap:16px}
-.overview dl:last-child{border-bottom:none}
-.overview dt{width:88px;flex-shrink:0;font-size:14px;font-weight:700;color:var(--sub)}
-.overview dd{font-size:14.5px;font-weight:600}
-.overview dd small{display:block;font-weight:400;color:var(--sub);font-size:13px;margin-top:2px}
+  /* ---------- 노션 ---------- */
+  .notion-frame{width:100%;height:76vh;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
+  .notion-card{max-width:600px;margin:24px auto;padding:36px 34px;text-align:center}
+  .notion-card .ic{width:60px;height:60px;border-radius:16px;background:var(--paper);display:grid;place-items:center;margin:0 auto 18px;font-size:28px}
+  .notion-card h2{font-family:'Nanum Myeongjo',serif;font-size:22px;margin:0 0 12px}
+  .notion-card p{color:var(--ink-soft);font-size:14px;line-height:1.7;margin:0 0 8px}
+  .notion-card code{background:var(--paper);padding:2px 7px;border-radius:5px;font-size:13px}
+  .notion-card .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink);margin-top:14px;padding:13px 26px;font-size:14.5px}
+  .notion-card .btn.primary:hover{background:#000}
 
-/* ===== Form ===== */
-.form-sec{background:var(--paper);border-top:1px solid var(--line)}
-.field{margin-bottom:26px}
-label.f-label{display:block;font-size:14.5px;font-weight:700;margin-bottom:9px}
-label.f-label .req{color:var(--orange);margin-left:2px}
-label.f-label .opt{color:var(--sub);font-weight:500;font-size:12.5px;margin-left:6px}
-select,input[type=text],textarea{
-  width:100%;font-family:inherit;font-size:15.5px;color:var(--ink);
-  background:var(--bg);border:1.5px solid var(--line);border-radius:12px;
-  padding:13px 14px;transition:border-color .15s;
-  appearance:none;-webkit-appearance:none;
-}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236E6862' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-select:focus,input:focus,textarea:focus{outline:none;border-color:var(--orange);background:#fff}
-select:disabled{opacity:.45}
-textarea{resize:vertical;min-height:110px}
-.hint{font-size:12.5px;color:var(--sub);margin-top:6px}
-.count{font-size:12px;color:var(--sub);text-align:right;margin-top:4px;font-variant-numeric:tabular-nums}
-
-/* 체크/라디오 칩 */
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip input{position:absolute;opacity:0;pointer-events:none}
-.chip span{
-  display:inline-block;font-size:14px;font-weight:600;
-  padding:9px 15px;border-radius:100px;cursor:pointer;
-  background:var(--bg);border:1.5px solid var(--line);color:var(--sub);
-  transition:all .12s;user-select:none;
-}
-.chip input:checked + span{background:var(--orange);border-color:var(--orange);color:#fff}
-.chip input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
-
-.submit-btn{
-  width:100%;font-family:inherit;font-size:16.5px;font-weight:800;color:#fff;
-  background:linear-gradient(135deg,var(--orange),var(--orange-deep));
-  border:none;border-radius:14px;padding:17px;cursor:pointer;
-  transition:transform .1s,opacity .15s;margin-top:8px;
-}
-.submit-btn:active{transform:scale(.985)}
-.submit-btn:disabled{opacity:.55;cursor:default}
-.err-msg{
-  display:none;background:#FDECEC;color:#C0392B;font-size:14px;font-weight:600;
-  border-radius:12px;padding:13px 16px;margin-bottom:16px;
-}
-
-/* 완료 화면 */
-.done{display:none;text-align:center;padding:64px 0}
-.done .mark{
-  width:72px;height:72px;border-radius:50%;margin:0 auto 22px;
-  background:linear-gradient(135deg,var(--orange),var(--orange-deep));
-  display:flex;align-items:center;justify-content:center;
-}
-.done .mark svg{width:34px;height:34px}
-.done h2{margin-bottom:10px}
-.done p{color:var(--sub);font-size:15px}
-
-/* 마감 화면 */
-.closed{display:none;text-align:center;padding:64px 0}
-.closed h2{margin-bottom:10px}
-.closed p{color:var(--sub);font-size:15px}
-
-footer{padding:36px 0 56px;text-align:center;border-top:1px solid var(--line)}
-footer p{font-size:13px;color:var(--sub)}
-footer a{color:var(--orange);font-weight:600;text-decoration:none}
-
-.loading-overlay{
-  display:none;position:fixed;inset:0;background:rgba(255,255,255,.75);
-  z-index:99;align-items:center;justify-content:center;
-}
-.spinner{
-  width:44px;height:44px;border-radius:50%;
-  border:4px solid var(--line);border-top-color:var(--orange);
-  animation:spin .8s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .spinner{animation-duration:2s}
-}
+  /* ---------- 통계 ---------- */
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .toolbar .spacer{flex:1}
+  .section-title{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
+  .btn.sm{padding:7px 13px;font-size:13px;border-radius:8px}
+  .btn.sm.ghost{background:transparent;color:var(--slate)}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px}
+  .stat{padding:18px 20px}
+  .stat .label{font-size:12px;color:var(--slate);font-weight:600}
+  .stat .val{font-family:'Nanum Myeongjo',serif;font-size:29px;font-weight:800;margin-top:6px;line-height:1}
+  .stat .val small{font-size:14px;color:var(--slate);font-weight:600;margin-left:3px}
+  .stat .foot{font-size:11.5px;color:var(--slate);margin-top:7px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead th{text-align:left;font-size:11.5px;letter-spacing:.06em;color:var(--slate);text-transform:uppercase;font-weight:700;padding:11px 16px;border-bottom:1px solid var(--line)}
+  tbody td{padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  .team-head{cursor:pointer;user-select:none}
+  .team-head:hover td{background:#F4F2ED!important}
+  .team-head td{background:#FAF9F6;font-weight:700;font-size:13px;color:var(--ink-soft)}
+  .caret{display:inline-block;width:16px;color:var(--slate);font-size:11px}
+  .team-tag{display:inline-block;font-size:11.5px;font-weight:600;color:var(--slate);background:var(--line-soft);padding:3px 9px;border-radius:20px}
+  .count-cell{display:flex;align-items:center;gap:10px;min-width:120px;justify-content:flex-end}
+  .count-cell .mini{width:90px;height:7px;background:var(--line-soft);border-radius:4px;overflow:hidden}
+  .count-cell .mini i{display:block;height:100%;background:var(--green);border-radius:4px}
+  .count-cell b{font-variant-numeric:tabular-nums;font-size:13.5px;width:34px;text-align:right}
+  .rounds{display:flex;flex-wrap:wrap;gap:4px;max-width:380px}
+  .rchip{font-size:11px;font-weight:700;color:var(--slate);background:var(--line-soft);border-radius:5px;padding:2px 7px;font-variant-numeric:tabular-nums}
+  .rank{width:30px;text-align:center;color:var(--slate);font-variant-numeric:tabular-nums;font-weight:700}
+  .banner{display:flex;gap:11px;background:#FBECEE;border:1px solid #F0C4CC;color:#8A1226;border-radius:11px;padding:12px 16px;font-size:13px;margin-bottom:20px;line-height:1.6}
+  .empty{text-align:center;color:var(--slate);padding:40px 20px;font-size:14px}
+  .loading{text-align:center;color:var(--slate);padding:70px 20px;font-size:14px}
+  .spin{width:18px;height:18px;border:2.5px solid var(--line);border-top-color:var(--accent);border-radius:50%;display:inline-block;animation:sp .7s linear infinite;vertical-align:-4px;margin-right:6px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:30px;font-size:13.5px;font-weight:600;z-index:80;opacity:0;transition:.3s;box-shadow:0 8px 30px rgba(0,0,0,.25);pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast.err{background:var(--accent)}
+  @media (max-width:720px){ .stat-row{grid-template-columns:1fr} .form-card{padding:24px 20px} }
 </style>
 </head>
 <body>
 
-<!-- ===== HERO ===== -->
-<header class="hero">
-  <div class="wrap">
-    <span class="eyebrow">비즈솔루션본부</span>
-    <h1>AI활용 TF<br><em>합류할 사람</em>을<br>찾습니다</h1>
-    <p class="lead">AI로 일하는 방식을 먼저 바꾸는 사람들. 본부의 AI 활용 문화를 함께 만들어갈 멤버를 모집합니다.</p>
-    <div class="dday">
-      <span class="label">신청 마감</span>
-      <span class="value" id="ddayValue">D-0</span>
-      <span class="until">7.27(월) 자정까지</span>
+<header class="masthead">
+  <div class="mast-top">
+    <div class="nameplate">
+      <div class="title serif">월요<span class="em">초대석</span></div>
+      <div class="kicker">비즈솔루션본부 · 주간 편집 살롱</div>
     </div>
   </div>
+  <div class="rule-double"><div class="inner"></div></div>
+  <nav class="tabs" id="tabs">
+    <button class="active" data-view="apply">참석 신청</button>
+    <button data-view="past">지난 특집 보기 <span class="tab-note">(새 탭으로 열기)</span></button>
+    <button data-view="stats">통계</button>
+  </nav>
 </header>
 
-<!-- ===== TF 소개 ===== -->
-<section>
-  <div class="wrap">
-    <div class="sec-label">WHAT WE DO</div>
-    <h2>AI활용 TF는 이런 일을 합니다</h2>
-    <p class="sec-desc">거창한 이론 공부가 아니라, 지금 하는 업무에 AI를 붙여 실제로 바꿔보는 실행 조직입니다.</p>
-    <div class="cards">
-      <div class="card">
-        <span class="ico">⚡️</span>
-        <h3>업무 자동화</h3>
-        <p>반복되는 보고서, 데이터 정리, 문서 작업을 AI로 자동화하는 실전 프로젝트</p>
-      </div>
-      <div class="card">
-        <span class="ico">🎬</span>
-        <h3>AI 콘텐츠 제작</h3>
-        <p>이미지·영상 생성 AI를 활용한 제안서, 광고 시안, 이벤트 콘텐츠 제작</p>
-      </div>
-      <div class="card">
-        <span class="ico">🛠</span>
-        <h3>영업지원 도구 개발</h3>
-        <p>대시보드, 리포트 생성기 등 본부 맞춤형 AI 도구를 직접 만들고 개선</p>
-      </div>
-      <div class="card">
-        <span class="ico">📣</span>
-        <h3>사내 전파</h3>
-        <p>TF에서 검증한 활용법을 본부 전체에 공유하는 세션 운영</p>
-      </div>
-    </div>
-  </div>
-</section>
+<main>
+  <section class="view active" id="view-apply"></section>
+  <section class="view" id="view-past"></section>
+  <section class="view" id="view-stats"><div class="loading"><span class="spin"></span>불러오는 중…</div></section>
+</main>
 
-<!-- ===== 모집 개요 ===== -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-label">RECRUIT</div>
-    <h2>모집 개요</h2>
-    <div class="overview">
-      <dl><dt>대상</dt><dd>비즈솔루션본부 전 구성원</dd></dl>
-      <dl><dt>인원</dt><dd id="recruitCount">00명<small>신청 결과에 따라 확정</small></dd></dl>
-      <dl><dt>활동 기간</dt><dd>선발 시 ~ 2026. 12. 31</dd></dl>
-      <dl><dt>신청 마감</dt><dd>2026. 7. 27 (월) 자정</dd></dl>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 신청 폼 ===== -->
-<section class="form-sec" id="applySec">
-  <div class="wrap">
-    <div class="sec-label">APPLY</div>
-    <h2>신청하기</h2>
-    <p class="sec-desc">1분이면 충분합니다. 부담 없이 신청해 주세요.</p>
-
-    <div class="err-msg" id="errMsg"></div>
-
-    <div id="formArea">
-      <div class="field">
-        <label class="f-label" for="name">이름<span class="req">*</span></label>
-        <input type="text" id="name" placeholder="홍길동" autocomplete="name">
-      </div>
-
-      <div class="field">
-        <label class="f-label" for="team">소속팀<span class="req">*</span></label>
-        <input type="text" id="team" placeholder="예: 솔루션기획1팀">
-      </div>
-
-      <div class="field">
-        <label class="f-label">사용해 본 AI<span class="req">*</span></label>
-        <div class="chips" id="expChips">
-          <label class="chip"><input type="checkbox" value="ChatGPT"><span>ChatGPT</span></label>
-          <label class="chip"><input type="checkbox" value="Claude"><span>Claude</span></label>
-          <label class="chip"><input type="checkbox" value="Gemini"><span>Gemini</span></label>
-          <label class="chip"><input type="checkbox" value="이미지/영상 AI"><span>이미지/영상 AI</span></label>
-          <label class="chip"><input type="checkbox" value="코딩 AI"><span>코딩 AI</span></label>
-          <label class="chip"><input type="checkbox" value="사용 경험 없음"><span>사용 경험 없음</span></label>
-        </div>
-        <p class="hint">해당하는 것을 모두 선택하세요. 경험이 없어도 괜찮습니다.</p>
-      </div>
-
-      <div class="field">
-        <label class="f-label">현재 활용 수준<span class="req">*</span></label>
-        <div class="chips" id="levelChips">
-          <label class="chip"><input type="radio" name="level" value="검색용으로 가끔"><span>검색용으로 가끔</span></label>
-          <label class="chip"><input type="radio" name="level" value="업무에 종종 활용"><span>업무에 종종 활용</span></label>
-          <label class="chip"><input type="radio" name="level" value="자동화/제작까지 활용"><span>자동화·제작까지</span></label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="f-label">관심 분야<span class="req">*</span></label>
-        <div class="chips" id="interestChips">
-          <label class="chip"><input type="checkbox" value="업무 자동화"><span>업무 자동화</span></label>
-          <label class="chip"><input type="checkbox" value="문서/보고서"><span>문서·보고서</span></label>
-          <label class="chip"><input type="checkbox" value="데이터 분석"><span>데이터 분석</span></label>
-          <label class="chip"><input type="checkbox" value="콘텐츠 제작"><span>콘텐츠 제작</span></label>
-          <label class="chip"><input type="checkbox" value="영업지원 도구"><span>영업지원 도구</span></label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="f-label" for="motive">지원 동기<span class="req">*</span></label>
-        <textarea id="motive" maxlength="300" placeholder="AI활용 TF에 지원하는 이유를 자유롭게 적어주세요. (200자 내외)"></textarea>
-        <div class="count"><span id="motiveCount">0</span> / 300</div>
-      </div>
-
-      <div class="field">
-        <label class="f-label" for="wish">TF에서 해보고 싶은 것 한 가지<span class="opt">선택</span></label>
-        <input type="text" id="wish" maxlength="100" placeholder="예: 주간보고 자동 요약 만들어보기">
-      </div>
-
-      <button class="submit-btn" id="submitBtn">신청 완료하기</button>
-    </div>
-
-    <!-- 완료 -->
-    <div class="done" id="doneArea">
-      <div class="mark">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12.5l5 5 10-11" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h2>신청이 완료됐습니다</h2>
-      <p>선발 결과는 개별 안내드립니다.<br>함께하게 되어 기대됩니다! 🙌</p>
-    </div>
-
-    <!-- 마감 -->
-    <div class="closed" id="closedArea">
-      <h2>모집이 마감됐습니다</h2>
-      <p>관심 가져주셔서 감사합니다.<br>다음 기회에 다시 만나요.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <p>문의: 솔루션기획1팀 신동민 팀장 · <a href="mailto:shin.dongmin@joongang.co.kr">shin.dongmin@joongang.co.kr</a></p>
-  </div>
-</footer>
-
-<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
-/* ================= CONFIG ================= */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzB-XuT_GhjwU9lixPAAkkbaqR_GL2WnnYgRSC5jIpwmYUiCrRAyTLtiRP8NpWFRj9Z/exec';
-const DEADLINE = new Date('2026-07-28T00:00:00+09:00'); // 7/27(월) 자정 = 28일 00:00
-const RECRUIT_COUNT = '00명'; // 확정되면 수정 (예: '8명 내외')
+/* ============================================================
+   설정
+   ============================================================ */
+const API = 'https://script.google.com/macros/s/AKfycbzN_MycSt-8qfjqnRiCPYiq1473zC26U04KouKpRhqEsmNgupn-LQlDGYfKrNYLSlrkpg/exec';
 
-/* ================= 초기화 ================= */
-const $ = id => document.getElementById(id);
+// 노션 지난 특집 페이지. 'notion.site' 공개 주소면 인라인 임베드, 그 외(app.notion.com 등)는 '열기' 버튼.
+const NOTION_URL = 'https://royal-wolfsbane-2ec.notion.site/302972c0c11d8068b3a9d158209743ab';
 
-// 인원 표시
-$('recruitCount').firstChild.textContent = RECRUIT_COUNT;
+const APPLY_WINDOW_DAYS = 21;   // 신청 가능한 특집: 오늘부터 며칠 이내
 
-// D-day
-(function renderDday(){
-  const now = new Date();
-  const diff = DEADLINE - now;
-  const el = $('ddayValue');
-  if (diff <= 0) {
-    el.textContent = '마감';
-    $('formArea').style.display = 'none';
-    $('closedArea').style.display = 'block';
+// 통계에서 본부원(팀) 나열 순서
+const TEAM_ORDER = ['마케팅솔루션1팀','마케팅솔루션2팀','마케팅솔루션3팀','마케팅솔루션4팀','디지털사업팀','솔루션기획1팀','솔루션기획2팀','솔루션개발팀','콘텐트사업팀','Innovation Lab','콘텐트개발팀','매체사업팀','운영지원팀','광고기획지원팀'];
+
+/* ---------------- 상태 / 유틸 ---------------- */
+let state = { weeks:[], roster:[], currentRound:0, loading:true, error:null, notionOpened:false,
+              form:{name:'',team:'',round:0,suggestion:''}, collapsed:{}, memberSort:'team' };
+const $=(s,el=document)=>el.querySelector(s);
+const $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const weekByRound=r=>state.weeks.find(w=>w.round===r);
+const titledWeeks=()=>state.weeks.filter(w=>w.title && !/취소|생략|공휴일|대체|미진행/.test(w.title));
+function toast(msg,isErr){const t=$('#toast');t.textContent=msg;t.className='toast show'+(isErr?' err':'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='toast',2200);}
+function fmtDate(w){ return (w.date&&w.dow)?`${w.date} (${w.dow})`:(w.date||''); }
+function isPast(w){ return w.dateISO ? new Date(w.dateISO+'T00:00') < new Date(new Date().toDateString()) : false; }
+function attList(w){
+  if(w.actualAttendees && w.actualAttendees.length) return w.actualAttendees;
+  if(w.attendees && w.attendees.length) return w.attendees;
+  return Object.keys(w.apply||{}).filter(n=>w.apply[n]==='참석');
+}
+function isoNow(off){ const d=new Date(); if(off)d.setDate(d.getDate()+off); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function applicableWeeks(){
+  const t=isoNow(0), max=isoNow(APPLY_WINDOW_DAYS);
+  return titledWeeks().filter(w=>w.dateISO && w.dateISO>=t && w.dateISO<=max).sort((a,b)=>a.dateISO<b.dateISO?-1:1);
+}
+const norm=s=>String(s||'').replace(/\s/g,'').toLowerCase();
+function teamRank(t){ const nt=norm(t); const i=TEAM_ORDER.findIndex(x=>{const nx=norm(x); return nt===nx||nt.indexOf(nx)>=0||nx.indexOf(nt)>=0;}); return i<0?900:i; }
+
+/* ---------------- 데이터 로드 (백그라운드) ---------------- */
+async function load(){
+  try{
+    const res=await fetch(API,{method:'GET'});
+    const data=await res.json();
+    if(!data.ok) throw new Error(data.error||'불러오기 실패');
+    state.weeks=data.weeks||[];
+    state.roster=(data.roster||[]).filter(m=>m.name && m.team && !['타운보드','비즈솔루션본부'].includes(m.name));
+    state.currentRound=data.currentRound||0;
+    state.loading=false;
+    const aw=applicableWeeks(); if(aw.length && !state.form.round) state.form.round=aw[0].round;
+    renderWeekCards();     // 폼의 특집 영역만 채움 (입력값 보존)
+    renderStats();
+  }catch(err){
+    state.loading=false; state.error=err.message||String(err);
+    renderWeekCards(); renderStats();
+  }
+}
+
+async function submitForm(){
+  const {name,team,round,suggestion}=state.form;
+  if(!name.trim()){ toast('이름을 입력하세요',true); $('#fName')&&$('#fName').focus(); return; }
+  if(!round){ toast('참여할 특집을 선택하세요',true); return; }
+  const btn=$('#submitBtn'); if(btn){ btn.disabled=true; btn.textContent='신청 중…'; }
+  try{
+    const res=await fetch(API,{ method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({ round, name:name.trim(), team:team.trim(), status:'참석', suggestion:(suggestion||'').trim() }) });
+    const data=await res.json();
+    if(!data.ok) throw new Error(data.error||'저장 실패');
+    if(data.data){ state.weeks=data.data.weeks; state.roster=data.data.roster; state.currentRound=data.data.currentRound; }
+    renderSuccess(name.trim(), team.trim(), weekByRound(round), (suggestion||'').trim());
+    renderStats();
+  }catch(err){
+    toast('신청 실패: '+err.message, true);
+    if(btn){ btn.disabled=false; btn.textContent='참석 신청하기'; }
+  }
+}
+
+/* ============================================================
+   렌더링
+   ============================================================ */
+/* ---------- 참석 신청 폼 (즉시 노출) ---------- */
+function renderForm(){
+  $('#view-apply').innerHTML=`
+    <div class="apply-head">
+      <h1>비즈솔루션본부 월요초대석<br>참석 신청</h1>
+      <p>아래 내용을 입력하면 신청이 접수됩니다.</p>
+    </div>
+    <div class="card form-card">
+      <div class="q">
+        <label><span class="num serif">1</span>이름</label>
+        <input type="text" id="fName" placeholder="이름을 입력하세요" value="${esc(state.form.name)}"
+          oninput="state.form.name=this.value" autocomplete="off">
+      </div>
+      <div class="q">
+        <label><span class="num serif">2</span>소속팀</label>
+        <input type="text" id="fTeam" placeholder="예) 마케팅솔루션1팀" value="${esc(state.form.team)}"
+          oninput="state.form.team=this.value" autocomplete="off">
+      </div>
+      <div class="q">
+        <label><span class="num serif">3</span>참여 원하는 특집</label>
+        <div class="week-cards" id="weekCards"></div>
+      </div>
+      <div class="q">
+        <label><span class="num serif">4</span>특집 제안<span class="opt">선택</span></label>
+        <textarea id="fSug" placeholder="하면 좋을거 같은 특집 있으면 말씀주세요~"
+          oninput="state.form.suggestion=this.value">${esc(state.form.suggestion)}</textarea>
+      </div>
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">참석 신청하기</button>
+      <div class="form-note">신청 내역은 스프레드시트에 자동으로 누적됩니다.</div>
+    </div>`;
+  renderWeekCards();
+}
+function renderWeekCards(){
+  const box=$('#weekCards'); if(!box) return;
+  if(state.loading){ box.innerHTML=`<div class="week-loading"><span class="spin"></span>특집 목록을 불러오는 중…</div>`; return; }
+  if(state.error){ box.innerHTML=`<div class="week-loading" style="border-color:#F0C4CC;color:#8A1226">특집 목록을 불러오지 못했습니다. 새로고침해 주세요.</div>`; return; }
+  const aw=applicableWeeks();
+  if(!aw.length){ box.innerHTML=`<div class="empty" style="border:1px dashed var(--line);border-radius:11px">${Math.round(APPLY_WINDOW_DAYS/7)}주 내 예정된 특집이 없습니다.</div>`; return; }
+  if(!state.form.round) state.form.round=aw[0].round;
+  box.innerHTML=aw.map(w=>`
+    <div class="radio-card ${state.form.round===w.round?'sel':''}" data-round="${w.round}">
+      <div class="tick"></div>
+      <div class="ed serif">제${w.round}회</div>
+      <div><div class="wtitle">${esc(w.title)}</div><div class="wdate">${esc(fmtDate(w))}${w.place?' · '+esc(w.place):''}</div></div>
+    </div>`).join('');
+  box.onclick=e=>{
+    const c=e.target.closest('.radio-card[data-round]'); if(!c)return;
+    state.form.round=Number(c.dataset.round);
+    $$('#weekCards .radio-card').forEach(x=>x.classList.toggle('sel', Number(x.dataset.round)===state.form.round));
+  };
+}
+function renderSuccess(name, team, w, suggestion){
+  $('#view-apply').innerHTML=`
+    <div class="card success">
+      <div class="mark">✓</div>
+      <h2>신청이 접수되었습니다</h2>
+      <p>${esc(name)} 님, 참석 신청이 정상적으로 저장되었습니다.</p>
+      <div class="detail">
+        <div class="r"><b>이름</b><span>${esc(name)}</span></div>
+        ${team?`<div class="r"><b>소속팀</b><span>${esc(team)}</span></div>`:''}
+        ${w?`<div class="r"><b>특집</b><span>제${w.round}회 · ${esc(w.title)}</span></div>
+        <div class="r"><b>일자</b><span>${esc(fmtDate(w))}${w.place?' · '+esc(w.place):''}</span></div>`:''}
+        ${suggestion?`<div class="r"><b>특집 제안</b><span>${esc(suggestion)}</span></div>`:''}
+      </div>
+      <button class="btn" onclick="resetForm()">다른 신청 하기</button>
+    </div>`;
+}
+function resetForm(){
+  const keepRound=state.form.round;
+  state.form={name:'',team:'',round:keepRound,suggestion:''};
+  renderForm();
+}
+
+/* ---------- 지난 특집 보기 (노션) ---------- */
+function renderNotion(){
+  const el=$('#view-past');
+  if(!NOTION_URL || !/^https?:\/\//.test(NOTION_URL)){
+    el.innerHTML=`<div class="card notion-card"><div class="ic">📄</div><h2>노션 페이지 연결 필요</h2>
+      <p><code>NOTION_URL</code> 값에 노션 주소를 넣어주세요.</p></div>`;
     return;
   }
-  const days = Math.floor(diff / 86400000);
-  el.textContent = days === 0 ? 'D-DAY' : 'D-' + days;
-})();
-
-// '사용 경험 없음' 배타 처리
-$('expChips').addEventListener('change', e => {
-  const boxes = [...$('expChips').querySelectorAll('input')];
-  const none = boxes.find(b => b.value === '사용 경험 없음');
-  if (e.target === none && none.checked) {
-    boxes.forEach(b => { if (b !== none) b.checked = false; });
-  } else if (e.target !== none && e.target.checked) {
-    none.checked = false;
-  }
-});
-
-// 글자수 카운터
-$('motive').addEventListener('input', () => {
-  $('motiveCount').textContent = $('motive').value.length;
-});
-
-/* ================= 제출 ================= */
-function getChecked(id){
-  return [...$(id).querySelectorAll('input:checked')].map(i => i.value);
-}
-function showErr(msg){
-  const e = $('errMsg');
-  e.textContent = msg;
-  e.style.display = 'block';
-  e.scrollIntoView({behavior:'smooth', block:'center'});
+  // 노션 게시(.notion.site) 페이지는 보안 정책상 iframe 삽입이 차단되어 새 탭으로 엽니다.
+  el.innerHTML=`
+    <div class="card notion-card">
+      <div class="ic">📄</div>
+      <h2>지난 특집 아카이브</h2>
+      <p>지난 특집 기록은 노션 페이지에 정리되어 있습니다.<br>이 탭에 들어오면 노션 페이지가 새 탭으로 열립니다.</p>
+      <a class="btn primary" id="notionOpen" href="${esc(NOTION_URL)}" target="_blank" rel="noopener">지난 특집 페이지 열기 ↗</a>
+      <p style="color:var(--slate);font-size:12px;margin-top:16px">노션 정책상 이 페이지는 사이트 안에 직접 삽입(iframe)할 수 없어<br>새 탭으로 열립니다.</p>
+    </div>`;
 }
 
-$('submitBtn').addEventListener('click', async () => {
-  $('errMsg').style.display = 'none';
+/* ---------- 통계 ---------- */
+function renderStats(){
+  const el=$('#view-stats');
+  if(state.loading){ el.innerHTML=`<div class="loading"><span class="spin"></span>불러오는 중…</div>`; return; }
+  if(!state.roster.length){ el.innerHTML=`<div class="empty">출석부에서 명단을 찾지 못했습니다.</div>`; return; }
 
-  if (new Date() >= DEADLINE) {
-    $('formArea').style.display = 'none';
-    $('closedArea').style.display = 'block';
-    return;
-  }
+  // 실제 진행된 회차(제목 있고, 오늘까지, 참석자 기록 있음)에서 참석 집계
+  const today=isoNow(0);
+  const held=titledWeeks().filter(w=>w.dateISO && w.dateISO<=today && attList(w).length).sort((a,b)=>a.round-b.round);
 
-  const data = {
-    team: $('team').value.trim(),
-    name: $('name').value.trim(),
-    experience: getChecked('expChips').join(', '),
-    level: (document.querySelector('input[name=level]:checked')||{}).value || '',
-    interest: getChecked('interestChips').join(', '),
-    motive: $('motive').value.trim(),
-    wish: $('wish').value.trim()
+  const roundsOf={}; state.roster.forEach(m=>roundsOf[m.name]=[]);
+  held.forEach(w=>attList(w).forEach(n=>{ if(roundsOf[n]) roundsOf[n].push(w.round); }));
+  const cnt=name=>(roundsOf[name]||[]).length;
+  const maxCount=Math.max(1,...state.roster.map(m=>cnt(m.name)));
+
+  const countCell=c=>`<div class="count-cell"><div class="mini"><i style="width:${Math.round((c/maxCount)*100)}%"></i></div><b>${c}회</b></div>`;
+  const roundsCell=name=>{
+    const rs=roundsOf[name]||[];
+    return rs.length?`<div class="rounds">${rs.map(r=>`<span class="rchip">${r}회</span>`).join('')}</div>`
+                    :'<span style="color:var(--slate);font-size:12.5px">–</span>';
   };
 
-  if (!data.name) return showErr('이름을 입력해 주세요.');
-  if (!data.team) return showErr('소속팀을 입력해 주세요.');
-  if (!data.experience) return showErr('사용해 본 AI를 선택해 주세요.');
-  if (!data.level) return showErr('현재 활용 수준을 선택해 주세요.');
-  if (!data.interest) return showErr('관심 분야를 선택해 주세요.');
-  if (!data.motive) return showErr('지원 동기를 입력해 주세요.');
+  let body;
+  if(state.memberSort==='count'){
+    const sorted=[...state.roster].sort((a,b)=>cnt(b.name)-cnt(a.name) || (a.name<b.name?-1:1));
+    const rows=sorted.map((m,i)=>`<tr>
+      <td class="rank">${i+1}</td>
+      <td><b>${esc(m.name)}</b>${m.team?` <span class="team-tag">${esc(m.team)}</span>`:''}</td>
+      <td>${roundsCell(m.name)}</td>
+      <td style="text-align:right">${countCell(cnt(m.name))}</td></tr>`).join('');
+    body=`<table><thead><tr><th class="rank">#</th><th>이름</th><th>참석 회차</th><th style="text-align:right">참석 횟수</th></tr></thead><tbody>${rows}</tbody></table>`;
+  } else {
+    const teams=[...new Set(state.roster.map(m=>m.team||'기타'))]
+      .sort((a,b)=>{ const ra=teamRank(a), rb=teamRank(b); return ra!==rb?ra-rb:(a<b?-1:1); });
+    const rows=teams.map(t=>{
+      const ms=state.roster.filter(m=>(m.team||'기타')===t);
+      const open=!state.collapsed[t];
+      const head=`<tr class="team-head" data-team="${esc(t)}">
+        <td colspan="3"><span class="caret">${open?'▾':'▸'}</span>${esc(t)} · ${ms.length}명</td></tr>`;
+      const rws=open?ms.map(m=>`<tr>
+        <td><b>${esc(m.name)}</b></td>
+        <td>${roundsCell(m.name)}</td>
+        <td style="text-align:right">${countCell(cnt(m.name))}</td></tr>`).join(''):'';
+      return head+rws;
+    }).join('');
+    body=`<table><thead><tr><th>이름</th><th>참석 회차</th><th style="text-align:right">참석 횟수</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
 
-  $('submitBtn').disabled = true;
-  $('loading').style.display = 'flex';
+  const top=[...state.roster].sort((a,b)=>cnt(b.name)-cnt(a.name))[0];
+  const avg=held.length?Math.round(held.reduce((s,w)=>s+attList(w).length,0)/held.length):0;
 
-  try {
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain;charset=utf-8'},
-      body: JSON.stringify(data)
-    });
-    const json = await res.json();
-    if (json.result === 'duplicate') {
-      showErr('이미 신청하셨습니다. 문의사항은 신동민 팀장에게 연락해 주세요.');
-    } else if (json.result === 'success') {
-      $('formArea').style.display = 'none';
-      $('doneArea').style.display = 'block';
-      $('doneArea').scrollIntoView({behavior:'smooth', block:'center'});
-    } else {
-      showErr('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-    }
-  } catch (err) {
-    showErr('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-  } finally {
-    $('submitBtn').disabled = false;
-    $('loading').style.display = 'none';
+  el.innerHTML=`
+    <div class="stat-row">
+      <div class="card stat"><div class="label">진행 회차</div><div class="val">${held.length}<small>회</small></div><div class="foot">본부원 ${state.roster.length}명</div></div>
+      <div class="card stat"><div class="label">평균 참석 인원</div><div class="val">${avg}<small>명</small></div><div class="foot">진행된 회차 기준</div></div>
+      <div class="card stat"><div class="label">최다 참석</div><div class="val">${top?cnt(top.name):0}<small>회</small></div><div class="foot">${top?esc(top.name):'-'}</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="section-title">전체 본부원 · ${state.roster.length}명</div>
+      <div class="spacer"></div>
+      <button class="btn sm ${state.memberSort==='team'?'':'ghost'}" data-sort="team">팀별</button>
+      <button class="btn sm ${state.memberSort==='count'?'':'ghost'}" data-sort="count">참석순</button>
+    </div>
+    <div class="card">${body}</div>
+    <div class="form-note" style="text-align:left;margin-top:12px">참석 회차·횟수는 스케줄의 회차별 <b>참석자</b> 명단 기준으로 집계됩니다.</div>`;
+}
+function toggleTeam(t){ state.collapsed[t]=!state.collapsed[t]; renderStats(); }
+function setMemberSort(m){ state.memberSort=m; renderStats(); }
+
+/* ---------- 탭 / 이벤트 ---------- */
+function switchTab(v){
+  $$('#tabs button').forEach(x=>x.classList.toggle('active', x.dataset.view===v));
+  $$('.view').forEach(s=>s.classList.remove('active'));
+  $('#view-'+v).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$('#tabs').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-view]'); if(!b) return;
+  switchTab(b.dataset.view);
+  // 지난 특집 탭 진입 시 노션을 새 탭으로 자동 오픈(세션당 1회, 클릭 제스처라 팝업 차단 안 됨)
+  if(b.dataset.view==='past' && NOTION_URL && /^https?:\/\//.test(NOTION_URL) && !state.notionOpened){
+    state.notionOpened=true;
+    window.open(NOTION_URL,'_blank','noopener');
   }
 });
+$('#view-stats').addEventListener('click',e=>{
+  const th=e.target.closest('.team-head'); if(th){ toggleTeam(th.dataset.team); return; }
+  const sb=e.target.closest('[data-sort]'); if(sb){ setMemberSort(sb.dataset.sort); }
+});
+
+/* ---------- 부팅: 폼 먼저, 로딩은 뒤에서 ---------- */
+renderForm();
+renderNotion();
+load();
 </script>
 </body>
 </html>
