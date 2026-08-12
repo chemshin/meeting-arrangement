@@ -66,6 +66,8 @@
   .radio-card.sel .tick::after{content:"";width:7px;height:7px;border-radius:50%;background:#fff}
   .radio-card .ed{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:13px;color:var(--accent);width:52px;flex-shrink:0}
   .radio-card .wtitle{font-weight:600;font-size:14.5px}
+  .radio-card .wbody{min-width:0}
+  .radio-card .wdesc{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.55}
   .radio-card .wdate{font-size:12.5px;color:var(--slate);margin-top:2px}
   .week-loading{display:flex;align-items:center;gap:9px;color:var(--slate);font-size:13.5px;padding:16px;border:1px dashed var(--line);border-radius:11px}
   .submit-btn{width:100%;padding:15px;border:0;border-radius:11px;background:var(--accent);color:#fff;font-size:15.5px;font-weight:700;transition:.15s}
@@ -180,7 +182,16 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const weekByRound=r=>state.weeks.find(w=>w.round===r);
 const titledWeeks=()=>state.weeks.filter(w=>w.title && !/취소|생략|공휴일|대체|미진행/.test(w.title));
 function toast(msg,isErr){const t=$('#toast');t.textContent=msg;t.className='toast show'+(isErr?' err':'');clearTimeout(t._t);t._t=setTimeout(()=>t.className='toast',2200);}
-function fmtDate(w){ return (w.date&&w.dow)?`${w.date} (${w.dow})`:(w.date||''); }
+function fmtDate(w){
+  if(w.dateISO){
+    const [y,m,d]=w.dateISO.split('-').map(Number);
+    const dow=w.dow||['일','월','화','수','목','금','토'][new Date(w.dateISO+'T00:00').getDay()];
+    return `${m}월 ${d}일 (${dow})`;
+  }
+  const s=(w.date||'').trim();
+  const mm=s.match(/(\d{1,2})\D+(\d{1,2})/);
+  return mm ? `${+mm[1]}월 ${+mm[2]}일${w.dow?` (${w.dow})`:''}` : s;
+}
 function isPast(w){ return w.dateISO ? new Date(w.dateISO+'T00:00') < new Date(new Date().toDateString()) : false; }
 function attList(w){
   if(w.actualAttendees && w.actualAttendees.length) return w.actualAttendees;
@@ -279,7 +290,11 @@ function renderWeekCards(){
     <div class="radio-card ${state.form.round===w.round?'sel':''}" data-round="${w.round}">
       <div class="tick"></div>
       <div class="ed serif">제${w.round}회</div>
-      <div><div class="wtitle">${esc(w.title)}</div><div class="wdate">${esc(fmtDate(w))}${w.place?' · '+esc(w.place):''}</div></div>
+      <div class="wbody">
+        <div class="wtitle">${esc(w.title)}</div>
+        <div class="wdate">${esc(fmtDate(w))}${w.place?' · '+esc(w.place):''}</div>
+        ${w.desc?`<div class="wdesc">${esc(w.desc)}</div>`:''}
+      </div>
     </div>`).join('');
   box.onclick=e=>{
     const c=e.target.closest('.radio-card[data-round]'); if(!c)return;
@@ -297,7 +312,8 @@ function renderSuccess(name, team, w, suggestion){
         <div class="r"><b>이름</b><span>${esc(name)}</span></div>
         ${team?`<div class="r"><b>소속팀</b><span>${esc(team)}</span></div>`:''}
         ${w?`<div class="r"><b>특집</b><span>제${w.round}회 · ${esc(w.title)}</span></div>
-        <div class="r"><b>일자</b><span>${esc(fmtDate(w))}${w.place?' · '+esc(w.place):''}</span></div>`:''}
+        <div class="r"><b>일자</b><span>${esc(fmtDate(w))}${w.place?' · '+esc(w.place):''}</span></div>
+        ${w.desc?`<div class="r"><b>설명</b><span>${esc(w.desc)}</span></div>`:''}`:''}
         ${suggestion?`<div class="r"><b>특집 제안</b><span>${esc(suggestion)}</span></div>`:''}
       </div>
       <button class="btn" onclick="resetForm()">다른 신청 하기</button>
