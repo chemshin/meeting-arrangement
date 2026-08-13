@@ -213,7 +213,7 @@ async function load(){
     const data=await res.json();
     if(!data.ok) throw new Error(data.error||'불러오기 실패');
     state.weeks=data.weeks||[];
-    state.roster=(data.roster||[]).filter(m=>m.name && m.team && !['타운보드','비즈솔루션본부'].includes(m.name));
+    state.roster=cleanRoster(data.roster);
     state.currentRound=data.currentRound||0;
     state.loading=false;
     const aw=applicableWeeks(); if(aw.length && !state.form.round) state.form.round=aw[0].round;
@@ -225,17 +225,25 @@ async function load(){
   }
 }
 
+function cleanRoster(arr){ return (arr||[]).filter(m=>m.name && m.team && !['타운보드','비즈솔루션본부'].includes(m.name)); }
+
 async function submitForm(){
   const {name,team,round,suggestion}=state.form;
   if(!name.trim()){ toast('이름을 입력하세요',true); $('#fName')&&$('#fName').focus(); return; }
   if(!round){ toast('참여할 특집을 선택하세요',true); return; }
   const btn=$('#submitBtn'); if(btn){ btn.disabled=true; btn.textContent='신청 중…'; }
   try{
-    const res=await fetch(API,{ method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify({ round, name:name.trim(), team:team.trim(), status:'참석', suggestion:(suggestion||'').trim() }) });
+    // POST가 iOS Safari에서 막히는 문제가 있어 GET 쿼리로 신청을 전송합니다.
+    const q='?action=rsvp'
+      +'&round='+encodeURIComponent(round)
+      +'&name='+encodeURIComponent(name.trim())
+      +'&team='+encodeURIComponent(team.trim())
+      +'&status='+encodeURIComponent('참석')
+      +'&suggestion='+encodeURIComponent((suggestion||'').trim());
+    const res=await fetch(API+q);
     const data=await res.json();
     if(!data.ok) throw new Error(data.error||'저장 실패');
-    if(data.data){ state.weeks=data.data.weeks; state.roster=data.data.roster; state.currentRound=data.data.currentRound; }
+    if(data.data){ state.weeks=data.data.weeks; state.roster=cleanRoster(data.data.roster); state.currentRound=data.data.currentRound; }
     renderSuccess(name.trim(), team.trim(), weekByRound(round), (suggestion||'').trim());
     renderStats();
   }catch(err){
