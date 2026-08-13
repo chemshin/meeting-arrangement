@@ -226,6 +226,7 @@ async function load(){
 }
 
 function cleanRoster(arr){ return (arr||[]).filter(m=>m.name && m.team && !['타운보드','비즈솔루션본부'].includes(m.name)); }
+function retryLoad(){ state.error=null; state.loading=true; renderWeekCards(); load(); }
 
 async function submitForm(){
   const {name,team,round,suggestion}=state.form;
@@ -290,7 +291,11 @@ function renderForm(){
 function renderWeekCards(){
   const box=$('#weekCards'); if(!box) return;
   if(state.loading){ box.innerHTML=`<div class="week-loading"><span class="spin"></span>특집 목록을 불러오는 중…</div>`; return; }
-  if(state.error){ box.innerHTML=`<div class="week-loading" style="border-color:#F0C4CC;color:#8A1226">특집 목록을 불러오지 못했습니다. 새로고침해 주세요.</div>`; return; }
+  if(state.error){ box.innerHTML=`<div class="week-loading" style="border-color:#F0C4CC;color:#8A1226;flex-direction:column;align-items:flex-start;gap:8px">
+    <div>특집 목록을 불러오지 못했습니다.</div>
+    <div style="font-size:12px;opacity:.85">${esc(state.error)}</div>
+    <button class="btn sm" style="align-self:flex-start" onclick="retryLoad()">다시 시도</button>
+  </div>`; return; }
   const aw=applicableWeeks();
   if(!aw.length){ box.innerHTML=`<div class="empty" style="border:1px dashed var(--line);border-radius:11px">${Math.round(APPLY_WINDOW_DAYS/7)}주 내 예정된 특집이 없습니다.</div>`; return; }
   if(!state.form.round) state.form.round=aw[0].round;
